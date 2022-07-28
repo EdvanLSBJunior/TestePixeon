@@ -1,5 +1,6 @@
 package com.example.pixeon.heathCare.controllers;
 
+import com.example.pixeon.heathCare.dto.ExamPostDto;
 import com.example.pixeon.heathCare.entities.Exam;
 
 import com.example.pixeon.heathCare.exceptions.ResourceNotFound;
@@ -12,7 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -26,29 +30,25 @@ public class ExamController {
     ExamService service;
 
     @GetMapping
-    public Page<Exam> findAll(Pageable pageable) {
-        Page<Exam> result = repository.findAll(pageable);
-        return result;
+    public Page<Exam> findAll (Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
-//    @GetMapping(value = "/{id}")
-//    public Optional<Exam> findById(@PathVariable Long id) {
-//        Optional<Exam> exam = repository.findById(id);
-//        return exam;
-//    }
-
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getExamById(@PathVariable("id") Long id) {
-        Optional<Exam> exam = repository.findById(id);
-        if (exam == null)
+    public ResponseEntity<?> getExamById (@PathVariable("id") Long id) {
+        Optional<Exam> optExam = repository.findById(id);
+        if (optExam.isEmpty())
             throw new ResourceNotFound("O exame não foi encontrado!");
-        return new ResponseEntity<>(exam, HttpStatus.OK);
+        return new ResponseEntity<>(optExam, HttpStatus.OK);
     }
 
     @PostMapping
-    public Exam create(@RequestBody Exam exam) {
-        Exam result = repository.save(exam);
-        return result;
+    public ResponseEntity<Long> create(@Valid @RequestBody ExamPostDto examPostDto) {
+        var newExam = service.createExam(examPostDto);
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(newExam.getId()).toUri();
+        return ResponseEntity.created(location).body(newExam.getId());
     }
 
     @DeleteMapping(value = "/delete")
