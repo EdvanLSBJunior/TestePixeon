@@ -1,6 +1,7 @@
 package com.example.pixeon.heathCare.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_exam")
@@ -86,5 +87,18 @@ public class Exam {
 
     public void setHealthCareInstitution(HealthCareInstitution healthCareInstitution) {
         this.healthCareInstitution = healthCareInstitution;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exam exam = (Exam) o;
+        return id.equals(exam.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

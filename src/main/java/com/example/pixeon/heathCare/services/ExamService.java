@@ -26,7 +26,6 @@ public class ExamService {
     public Exam findById(Long id) {
         Optional<Exam> exam = repository.findById(id);
         return exam.orElseThrow(() -> new ResourceNotFoudException(id));
-
     }
 
     public Exam createExam(Exam exam) {

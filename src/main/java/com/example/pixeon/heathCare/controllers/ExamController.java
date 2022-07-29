@@ -3,7 +3,7 @@ package com.example.pixeon.heathCare.controllers;
 import com.example.pixeon.heathCare.entities.Exam;
 import com.example.pixeon.heathCare.repositories.ExamRepository;
 import com.example.pixeon.heathCare.services.ExamService;
-import com.example.pixeon.heathCare.services.InstitutionService;
+import com.example.pixeon.heathCare.services.HealthCareInstitutionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class ExamController {
     ExamService service;
 
     @Autowired
-    InstitutionService institutionService;
+    HealthCareInstitutionService healthCareInstitutionService;
 
     @GetMapping
     public ResponseEntity<List<Exam>> findAll() {

@@ -1,10 +1,12 @@
 package com.example.pixeon.heathCare.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_institution")
-public class HealthCareInstitution {
+public class HealthCareInstitution implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,5 +58,18 @@ public class HealthCareInstitution {
 
     public void setExams_found(Integer exams_found) {
         this.exams_found = exams_found;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HealthCareInstitution that = (HealthCareInstitution) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
