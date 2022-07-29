@@ -11,7 +11,8 @@ public class HealthCareInstitution {
     private Long id;
     private String name;
     private String cnpj;
-    private Integer budget = 20;
+    private Integer budget;
+    private Integer exams_found;
 
     public HealthCareInstitution() {
 
@@ -39,5 +40,21 @@ public class HealthCareInstitution {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public Integer getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Integer budget) {
+        this.budget = budget;
+    }
+
+    public Integer getExams_found() {
+        return exams_found;
+    }
+
+    public void setExams_found(Integer exams_found) {
+        this.exams_found = exams_found;
     }
 }

@@ -2,6 +2,8 @@ package com.example.pixeon.heathCare.services;
 
 import com.example.pixeon.heathCare.entities.Exam;
 import com.example.pixeon.heathCare.repositories.ExamRepository;
+import com.example.pixeon.heathCare.services.exceptions.ResourceNotFoudException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class ExamService {
 
     public Exam findById(Long id) {
         Optional<Exam> exam = repository.findById(id);
-        return exam.get();
+        return exam.orElseThrow(() -> new ResourceNotFoudException(id));
 
     }
 

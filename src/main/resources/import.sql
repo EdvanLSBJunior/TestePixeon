@@ -1,5 +1,5 @@
-INSERT INTO tb_institution(name, cnpj) VALUES ('Hospital São Rafael', '05.741.119/001-39');
-INSERT INTO tb_institution(name, cnpj) VALUES ('Hospital Incar', '05.652.543/0001-07');
+INSERT INTO tb_institution(name, cnpj, budget) VALUES ('Hospital São Rafael', '05.741.119/001-39', 20);
+INSERT INTO tb_institution(name, cnpj, budget) VALUES ('Hospital Incar', '05.652.543/0001-07', 20);
 
 INSERT INTO tb_exam(patient_name, patient_age, patient_gender, physician_name, physiciancrm, procedure_name, institution_id) VALUES ('Maria Eduarda Santos', 24, 'Feminino', 'Dr. Danilo da Cunha', 3871, 'Ecocardiograma', 1);
 INSERT INTO tb_exam(patient_name, patient_age, patient_gender, physician_name, physiciancrm, procedure_name, institution_id) VALUES ('Rebeca Silveira', 29, 'Feminino', 'Dra. Cláudia Mascarenhas', 5942, 'Endoscopia', 2);

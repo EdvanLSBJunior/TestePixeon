@@ -1,9 +1,9 @@
 package com.example.pixeon.heathCare.controllers;
 
 import com.example.pixeon.heathCare.entities.Exam;
-
 import com.example.pixeon.heathCare.repositories.ExamRepository;
 import com.example.pixeon.heathCare.services.ExamService;
+import com.example.pixeon.heathCare.services.InstitutionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping(value = "/exam")
@@ -23,6 +23,9 @@ public class ExamController {
 
     @Autowired
     ExamService service;
+
+    @Autowired
+    InstitutionService institutionService;
 
     @GetMapping
     public ResponseEntity<List<Exam>> findAll() {
