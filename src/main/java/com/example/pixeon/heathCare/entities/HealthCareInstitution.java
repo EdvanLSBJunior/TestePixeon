@@ -2,6 +2,7 @@ package com.example.pixeon.heathCare.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +16,9 @@ public class HealthCareInstitution implements Serializable {
     private String cnpj;
     private Integer budget;
     private Integer exams_found;
+
+    @OneToMany(mappedBy = "healthCareInstitution")
+    private List<Exam> exams;
 
     public HealthCareInstitution() {
 
@@ -67,5 +71,17 @@ public class HealthCareInstitution implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "HealthCareInstitution{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cnpj='" + cnpj + '\'' +
+                ", budget=" + budget +
+                ", exams_found=" + exams_found +
+                ", exams=" + exams +
+                '}';
     }
 }

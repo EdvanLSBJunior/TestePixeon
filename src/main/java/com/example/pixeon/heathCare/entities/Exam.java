@@ -18,7 +18,7 @@ public class Exam {
     private String procedureName;
 
     @ManyToOne
-    @JoinColumn(name = "institution_id")
+    @JoinColumn(name = "institution_id", nullable = false)
     private HealthCareInstitution healthCareInstitution;
 
     public Exam() {
@@ -96,5 +96,19 @@ public class Exam {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Exam{" +
+                "id=" + id +
+                ", patientName='" + patientName + '\'' +
+                ", patientAge=" + patientAge +
+                ", patientGender='" + patientGender + '\'' +
+                ", physicianName='" + physicianName + '\'' +
+                ", physicianCRM='" + physicianCRM + '\'' +
+                ", procedureName='" + procedureName + '\'' +
+                ", healthCareInstitution=" + healthCareInstitution +
+                '}';
     }
 }
