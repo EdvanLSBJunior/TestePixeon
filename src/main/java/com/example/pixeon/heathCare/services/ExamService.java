@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +34,13 @@ public class ExamService {
     }
 
     public Exam update(Long id, Exam examDto) {
-        Exam exam = repository.getReferenceById(id);
-        updateExam(exam, examDto);
-        return repository.save(exam);
+        try {
+            Exam exam = repository.getReferenceById(id);
+            updateExam(exam, examDto);
+            return repository.save(exam);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoudException(id);
+        }
     }
 
     private void updateExam(Exam exam, Exam obj) {
