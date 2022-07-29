@@ -5,6 +5,7 @@ import com.example.pixeon.heathCare.repositories.ExamRepository;
 import com.example.pixeon.heathCare.services.exceptions.ResourceNotFoudException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,6 +48,10 @@ public class ExamService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoudException(id);
+        }
     }
 }
