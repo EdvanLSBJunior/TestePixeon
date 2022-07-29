@@ -1,10 +1,13 @@
 package com.example.pixeon.heathCare.services;
 
-import com.example.pixeon.heathCare.dto.ExamPostDto;
 import com.example.pixeon.heathCare.entities.Exam;
 import com.example.pixeon.heathCare.repositories.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class ExamService {
@@ -12,21 +15,36 @@ public class ExamService {
     @Autowired
     ExamRepository repository;
 
-    public Exam createExam(ExamPostDto examPostDto) {
-    var newExam = convertExamDtoToExam(examPostDto);
-    return repository.save(newExam);
+    public List<Exam> findAll() {
+        return repository.findAll();
     }
 
-    private Exam convertExamDtoToExam(ExamPostDto examPostDto) {
+    public Exam findById(Long id) {
+        Optional<Exam> exam = repository.findById(id);
+        return exam.get();
 
-       Exam exam = new Exam();
+    }
 
-       exam.setPatientName(examPostDto.getPatientName());
-       exam.setPatientAge(examPostDto.getPatientAge());
-       exam.setPatientGender(exam.getPatientGender());
-       exam.setPhysicianName(examPostDto.getPhysicianName());
-       exam.setPhysicianCRM(examPostDto.getPhysicianCRM());
-       exam.setProcedureName(examPostDto.getProcedureName());
-       return exam;
+    public Exam createExam(Exam exam) {
+        return repository.save(exam);
+    }
+
+    public Exam update(Long id, Exam examDto) {
+        Exam exam = repository.getReferenceById(id);
+        updateExam(exam, examDto);
+        return repository.save(exam);
+    }
+
+    private void updateExam(Exam exam, Exam obj) {
+        exam.setPatientName(obj.getPatientName());
+        exam.setPatientAge(obj.getPatientAge());
+        exam.setPatientGender(obj.getPatientGender());
+        exam.setPhysicianName(obj.getPhysicianName());
+        exam.setPhysicianCRM(obj.getPhysicianCRM());
+        exam.setProcedureName(obj.getProcedureName());
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }
