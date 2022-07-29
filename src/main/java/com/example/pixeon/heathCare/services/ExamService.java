@@ -2,7 +2,7 @@ package com.example.pixeon.heathCare.services;
 
 import com.example.pixeon.heathCare.entities.Exam;
 import com.example.pixeon.heathCare.repositories.ExamRepository;
-import com.example.pixeon.heathCare.services.exceptions.ResourceNotFoudException;
+import com.example.pixeon.heathCare.services.exceptions.ResourceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,28 +17,29 @@ import java.util.Optional;
 public class ExamService {
 
     @Autowired
-    ExamRepository repository;
+    ExamRepository examRepository;
+
 
     public List<Exam> findAll() {
-        return repository.findAll();
+        return examRepository.findAll();
     }
 
     public Exam findById(Long id) {
-        Optional<Exam> exam = repository.findById(id);
-        return exam.orElseThrow(() -> new ResourceNotFoudException(id));
+        Optional<Exam> exam = examRepository.findById(id);
+        return exam.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Exam createExam(Exam exam) {
-        return repository.save(exam);
+        return examRepository.save(exam);
     }
 
     public Exam update(Long id, Exam examDto) {
         try {
-            Exam exam = repository.getReferenceById(id);
+            Exam exam = examRepository.getReferenceById(id);
             updateExam(exam, examDto);
-            return repository.save(exam);
+            return examRepository.save(exam);
         } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoudException(id);
+            throw new ResourceNotFoundException(id);
         }
     }
 
@@ -53,9 +54,9 @@ public class ExamService {
 
     public void delete(Long id) {
         try {
-            repository.deleteById(id);
+            examRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoudException(id);
+            throw new ResourceNotFoundException(id);
         }
     }
 }

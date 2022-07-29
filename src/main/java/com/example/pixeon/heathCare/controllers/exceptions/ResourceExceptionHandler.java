@@ -1,6 +1,6 @@
 package com.example.pixeon.heathCare.controllers.exceptions;
 
-import com.example.pixeon.heathCare.services.exceptions.ResourceNotFoudException;
+import com.example.pixeon.heathCare.services.exceptions.ResourceNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,8 @@ import java.time.Instant;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoudException.class)
-    public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoudException e, HttpServletRequest request) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request) {
         String error = "Resource not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());

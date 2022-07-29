@@ -1,11 +1,12 @@
 package com.example.pixeon.heathCare.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_exam")
-public class Exam {
+public class Exam implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,16 @@ public class Exam {
 
     public Exam() {
 
+    }
+
+    public Exam(String patientName, Integer patientAge, String patientGender, String physicianName, String physicianCRM, String procedureName, HealthCareInstitution healthCareInstitution) {
+        this.patientName = patientName;
+        this.patientAge = patientAge;
+        this.patientGender = patientGender;
+        this.physicianName = physicianName;
+        this.physicianCRM = physicianCRM;
+        this.procedureName = procedureName;
+        this.healthCareInstitution = healthCareInstitution;
     }
 
     public Long getId() {

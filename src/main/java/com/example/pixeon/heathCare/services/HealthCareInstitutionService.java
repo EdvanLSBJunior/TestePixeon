@@ -3,7 +3,7 @@ package com.example.pixeon.heathCare.services;
 import com.example.pixeon.heathCare.entities.HealthCareInstitution;
 
 import com.example.pixeon.heathCare.repositories.HealthCareInstitutionRepository;
-import com.example.pixeon.heathCare.services.exceptions.ResourceNotFoudException;
+import com.example.pixeon.heathCare.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class HealthCareInstitutionService {
 
     public HealthCareInstitution findById(Long id) {
         Optional<HealthCareInstitution> institution = repository.findById(id);
-        return institution.orElseThrow(() -> new ResourceNotFoudException(id));
+        return institution.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public HealthCareInstitution createInstitution(HealthCareInstitution institution) {
@@ -38,7 +38,7 @@ public class HealthCareInstitutionService {
             updateInstitution(institution, examDto);
             return repository.save(institution);
         } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoudException(id);
+            throw new ResourceNotFoundException(id);
         }
     }
 
@@ -52,7 +52,7 @@ public class HealthCareInstitutionService {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoudException(id);
+            throw new ResourceNotFoundException(id);
         }
     }
 }
